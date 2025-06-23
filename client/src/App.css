@@ -1,8 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #222; /* dark background */
+  color: white;
+  font-family: sans-serif;
+}
+
 #root {
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0 0 0 2rem;
+  padding: 2rem 2rem; /* top-bottom 1rem, left-right 2rem */
+  text-align: left;
 }
 
 .logo {
@@ -12,7 +20,7 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #f07d7daa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
