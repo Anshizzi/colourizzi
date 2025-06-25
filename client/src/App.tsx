@@ -8,44 +8,24 @@ function App() {
   const [error, setError] = useState<string | null>(null);
 
   const cleanHexValue = (value: string): string => {
-    // Remove any non-hex characters and ensure proper format
     let cleaned = value.replace(/[^#0-9A-Fa-f]/g, '');
-    if (!cleaned.startsWith('#')) {
-      cleaned = '#' + cleaned;
-    }
-    // Ensure exactly 7 characters (#RRGGBB)
-    if (cleaned.length > 7) {
-      cleaned = cleaned.substring(0, 7);
-    }
-    return cleaned;
+    if (!cleaned.startsWith('#')) cleaned = '#' + cleaned;
+    return cleaned.length > 7 ? cleaned.substring(0, 7) : cleaned;
   };
 
   const handleFetch = async () => {
     const cleanedHex = cleanHexValue(hex);
-    console.log('Original hex:', hex);
-    console.log('Cleaned hex:', cleanedHex);
-    
     setLoading(true);
     setError(null);
-    
+
     try {
-      const url = `http://localhost:5000/api/split-rgb?hex=${encodeURIComponent(cleanedHex)}`;
-      console.log('Fetching URL:', url);
-      
-      const res = await fetch(url);
-      console.log('Response status:', res.status);
-      
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      
+      const res = await fetch(`http://localhost:5000/api/split-rgb?hex=${encodeURIComponent(cleanedHex)}`);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
       const data = await res.json();
-      console.log('Fetched data:', data);
-      
       setRgbData(data.rgb);
       setSplit(data.split);
     } catch (err) {
-      console.error('Fetch error:', err);
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     } finally {
       setLoading(false);
@@ -53,70 +33,51 @@ function App() {
   };
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    console.log('Color input raw value:', value);
-    const cleanedValue = cleanHexValue(value);
-    console.log('Color input cleaned value:', cleanedValue);
-    setHex(cleanedValue);
+    setHex(cleanHexValue(e.target.value));
   };
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Colourizzi</h1>
+    <main className="app-container">
+      <h1 className="title">🎨 Colourizzi</h1>
 
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          flexWrap: 'wrap',  
-        }}
-      >
-        <input
-          type="color"
-          value={hex}
-          onChange={handleColorChange}
-          style={{ width: 100, height: 50, border: '2px solid #ccc' }}
-        />
+      <section className="controls">
+        <label className="color-picker-label">
+          Pick a color:
+          <input
+            type="color"
+            value={hex}
+            onChange={handleColorChange}
+            className="color-picker"
+          />
+        </label>
 
         <button
           onClick={handleFetch}
           disabled={loading}
-          style={{
-            background: loading ? '#555' : '#111',
-            color: '#fff',
-            padding: '0.5rem 1rem',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: loading ? 'not-allowed' : 'pointer',
-          }}
+          className={`fetch-button ${loading ? 'loading' : ''}`}
         >
           {loading ? 'Loading...' : 'Split Color'}
         </button>
+      </section>
 
-        {error && (
-          <div style={{ color: '#ff6b6b', fontSize: '14px' }}>
-            Error: {error}
-          </div>
-        )}
+      <section className="output">
+        {error && <div className="error">Error: {error}</div>}
 
         {split && !loading && (
-          <div style={{ color: '#fff', lineHeight: 1.5 }}>
+          <div className="result">
             <strong>Split:</strong> {split.r}% R, {split.g}% G, {split.b}% B
           </div>
         )}
 
         {rgbData && !loading && (
-          <div style={{ color: '#fff', lineHeight: 1.5 }}>
+          <div className="result">
             <strong>RGB:</strong> {rgbData.r}, {rgbData.g}, {rgbData.b}
           </div>
         )}
-      </div>
 
-      <div style={{ marginTop: '1rem', color: '#888', fontSize: '12px' }}>
-        Current hex: {hex}
-      </div>
-    </div>
+        <div className="current-hex">Current hex: {hex}</div>
+      </section>
+    </main>
   );
 }
 

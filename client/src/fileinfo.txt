@@ -1,0 +1,5 @@
+| File        | Purpose                   | Can You Style Here?                    |
+| ----------- | ------------------------- | ------------------------------------   |
+| `App.tsx`   | UI & logic                | ✅ Yes – inline styles or `className` |
+| `index.css` | Global styles             | ✅ Yes – ideal for reusable styling   |
+| `App.css`   | Component-specific styles | ✅ Yes                                |
