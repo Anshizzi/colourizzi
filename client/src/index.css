@@ -3,69 +3,39 @@
 @tailwind utilities;
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.4;
   font-weight: 400;
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.9);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Remove all default margins and padding */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Critical fix for centering */
 html, body, #root {
   width: 100%;
   height: 100%;
 }
 
 body {
-  /* Changed from place-items: flex-start */
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #5416e1; /* Your purpleBase color */
+  background-color: #5416e1;
 }
 
-/* Remove the default Vite button styles */
 button {
   all: unset;
-}
-
-/* Optional: Keep your existing styles below */
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-h1 {
-  font-size: 3em;
-  line-height: 1.1;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-
-
+  cursor: pointer;
 }
 
 /* Smooth scrolling */
@@ -73,20 +43,92 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Fix for Firefox scrollbar */
+/* Custom scrollbar styling */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.2) transparent;
 }
 
-/* Custom scrollbar for Webkit browsers */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: rgba(255,255,255,0.2);
-  border-radius: 4px;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Enhanced color picker styling */
+input[type="color"] {
+  appearance: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border: none;
+  border-radius: inherit;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* Typography improvements */
+.font-mono {
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Focus states */
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid #ffd700;
+  outline-offset: 2px;
+}
+
+/* Enhanced glass effect for separate boxes */
+.glass-box {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Micro-interactions */
+.hover-glow:hover {
+  box-shadow: 
+    0 0 20px rgba(255, 215, 0, 0.3),
+    0 0 40px rgba(255, 215, 0, 0.1);
+}
+
+/* Loading states */
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Ring utilities for better visual separation */
+.ring-3 {
+  box-shadow: 0 0 0 3px var(--tw-ring-color);
 }

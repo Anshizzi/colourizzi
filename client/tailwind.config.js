@@ -15,6 +15,7 @@ module.exports = {
       },
       animation: {
         float: 'float 6s ease-in-out infinite',
+        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         float: {
@@ -22,11 +23,13 @@ module.exports = {
           '50%': { transform: 'translateY(-20px)' },
         },
       },
-      // Add blur values for the glass effect
       blur: {
         xs: '2px',
         '100': '100px',
         '120': '120px',
+      },
+      backdropBlur: {
+        xs: '2px',
       }
     },
   },
